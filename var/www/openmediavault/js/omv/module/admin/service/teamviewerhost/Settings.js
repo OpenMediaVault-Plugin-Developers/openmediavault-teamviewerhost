@@ -58,6 +58,13 @@ Ext.define('OMV.module.admin.service.teamviewerhost.Settings', {
                 name: 'enable',
                 fieldLabel: _('Enable'),
                 checked: false
+            },{
+                xtype: "textfield",
+                name: "id",
+                fieldLabel: _("ID"),
+                submitValue: false,
+                readOnly: true
+            }]
         }];
     },
 
