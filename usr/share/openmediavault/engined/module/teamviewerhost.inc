@@ -22,12 +22,12 @@ class OMVModuleTeamviewerHost extends \OMV\Engine\Module\ServiceAbstract
 {
     public function getName()
     {
-        return "teamviewerhost";
+        return 'teamviewerhost';
     }
 
     public function applyConfig()
     {
-        $cmd = new \OMV\System\Process("omv-mkconf", "teamviewerhost");
+        $cmd = new \OMV\System\Process('omv-mkconf', 'teamviewerhost');
         $cmd->setRedirect2to1();
         $cmd->execute();
     }
@@ -35,30 +35,30 @@ class OMVModuleTeamviewerHost extends \OMV\Engine\Module\ServiceAbstract
     public function startService()
     {
         $db = \OMV\Config\Database::getInstance();
-        $object = $db->get("conf.service.teamviewerhost");
-        if (TRUE !== $object->get("enable"))
+        $object = $db->get('conf.service.teamviewerhost');
+        if (TRUE !== $object->get('enable'))
             return;
         // Start this service and enable the unit file.
-        $systemCtl = new \OMV\System\SystemCtl("teamviewerd");
+        $systemCtl = new \OMV\System\SystemCtl('teamviewerd');
         $systemCtl->enable(TRUE);
     }
 
     public function stopService()
     {
-        $systemCtl = new \OMV\System\SystemCtl("teamviewerd");
+        $systemCtl = new \OMV\System\SystemCtl('teamviewerd');
         $systemCtl->disable(TRUE);
     }
 
     public function getStatus()
     {
         $db = \OMV\Config\Database::getInstance();
-        $object = $db->get("conf.service.minidlna");
-        $systemCtl = new \OMV\System\SystemCtl("teamviewerd");
+        $object = $db->get('conf.service.teamviewerhost');
+        $systemCtl = new \OMV\System\SystemCtl('teamviewerd');
         return array(
-            "name" => $this->getName(),
-            "title" => gettext("Teamviewer Host"),
-            "enabled" => $object->get("enable"),
-            "running" => $systemCtl->isActive()
+            'name' => $this->getName(),
+            'title' => gettext("Teamviewer Host"),
+            'enabled' => $object->get('enable'),
+            'running' => $systemCtl->isActive()
         );
     }
 
@@ -66,8 +66,8 @@ class OMVModuleTeamviewerHost extends \OMV\Engine\Module\ServiceAbstract
     {
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
-            "org.openmediavault.conf.service.teamviewerhost",
-            [ $this, "setDirty" ]
+            'org.openmediavault.conf.service.teamviewerhost',
+            [ $this, 'setDirty' ]
         );
     }
 }

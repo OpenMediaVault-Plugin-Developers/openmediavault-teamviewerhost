@@ -20,40 +20,43 @@ class OMVRpcServiceTeamviewerHost extends \OMV\Rpc\ServiceAbstract
 {
     public function getName()
     {
-        return "Teamviewer Host";
+        return 'TeamviewerHost';
     }
 
     public function initialize()
     {
-        $this->registerMethod("getSettings");
-        $this->registerMethod("setSettings");
-        $this->registerMethod("doResetPassword");
+        $this->registerMethod('getSettings');
+        $this->registerMethod('setSettings');
+        $this->registerMethod('doResetPassword');
     }
 
     public function getSettings($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ['role' => OMV_ROLE_ADMINISTRATOR]);
         // Get the configuration object.
         $db = \OMV\Config\Database::getInstance();
-        $object = $db->get("conf.service.teamviewerhost");
+        $object = $db->get('conf.service.teamviewerhost');
         // Get teamviewer ID
-        $cmd = 'teamviewer info | grep "TeamViewer ID:" | tr -d " " | cut -d":" -f2';
-        exec($cmd, $output);
+        $cmd = 'teamviewer info | grep "TeamViewer ID:" | tr -d "[:cntrl:]" | tr -d " " | tail -c9';
+        $process = new OMV\System\Process($cmd);
+        $process->execute($output);
         // Add the new property 'id'.
-        $object->add("id", "string", $output[0]);
+        $object->add('id', 'string', $output[0]);
         return $object->getAssoc();
     }
 
     public function setSettings($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ['role' => OMV_ROLE_ADMINISTRATOR]);
         // Validate the parameters of the RPC service method.
-        $this->validateMethodParams($params, "rpc.teamviewerhost.setsettings");
+        $this->validateMethodParams($params, 'rpc.teamviewerhost.setsettings');
         // Get the existing configuration object.
         $db = \OMV\Config\Database::getInstance();
-        $object = $db->get("conf.service.teamviewerhost");
+        $object = $db->get('conf.service.teamviewerhost');
+        $object->setAssoc($params);
+        $db->set($object);
         // Return the configuration object.
         return $object->getAssoc();
     }
@@ -61,9 +64,11 @@ class OMVRpcServiceTeamviewerHost extends \OMV\Rpc\ServiceAbstract
     public function doResetPassword($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ['role' => OMV_ROLE_ADMINISTRATOR]);
         // Validate the parameters of the RPC service method.
-        $this->validateMethodParams($params, "rpc.teamviewerhost.resetpassword");
-        exec("teamviewer passwd " . escapeshellarg($params['password']), $output);
+        $this->validateMethodParams($params, 'rpc.teamviewerhost.resetpassword');
+        $cmd = 'teamviewer passwd ' . escapeshellarg($params['password']);
+        $process = new OMV\System\Process($cmd);
+        $process->execute();
     }
 }
