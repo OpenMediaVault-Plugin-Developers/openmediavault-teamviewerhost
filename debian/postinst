@@ -27,6 +27,8 @@ case "$1" in
         # package installation.
         dpkg-trigger update-fixperms
         dpkg-trigger update-locale
+
+        teamviewer repo disable
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
