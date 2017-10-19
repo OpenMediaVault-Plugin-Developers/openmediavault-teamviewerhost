@@ -30,7 +30,8 @@ Ext.define('OMV.module.admin.service.teamviewerhost.Password', {
             name: 'password',
             fieldLabel: _('Password'),
             allowBlank: false,
-            minLength: 8
+            minLength: 8,
+            maxLength: 12
         }];
     }
 });
