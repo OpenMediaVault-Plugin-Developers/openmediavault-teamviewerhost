@@ -1,3 +1,9 @@
+openmediavault-teamviewerhost (3.0.1) stable; urgency=low
+
+  * Improve ID output parsing
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sat, 23 Jun 2018 07:48:36 -0500
+
 openmediavault-teamviewerhost (3.0) stable; urgency=medium
 
   * initial release

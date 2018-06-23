@@ -38,7 +38,7 @@ class OMVRpcServiceTeamviewerHost extends \OMV\Rpc\ServiceAbstract
         $db = \OMV\Config\Database::getInstance();
         $object = $db->get('conf.service.teamviewerhost');
         // Get teamviewer ID
-        $cmd = 'teamviewer info | grep "TeamViewer ID:" | tr -d "[:cntrl:]" | tr -d " " | tail -c9';
+        $cmd = 'teamviewer info | awk \'$3 == "ID:" { print $5 }\'';
         $process = new OMV\System\Process($cmd);
         $process->execute($output);
         // Add the new property 'id'.
