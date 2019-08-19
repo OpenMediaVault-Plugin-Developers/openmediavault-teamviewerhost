@@ -16,4 +16,4 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 include:
-  - .{{ salt['pillar.get']('deploy_minidlna', 'default') }}
+  - .{{ salt['pillar.get']('deploy_teamviewerhost', 'default') }}
