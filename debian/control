@@ -8,7 +8,7 @@ XB-Plugin-Section: network
 
 Package: openmediavault-teamviewerhost
 Architecture: all
-Depends: openmediavault (>= 3.0.87),
+Depends: openmediavault (>= 5.0.5),
          teamviewer-host,
          ${misc:Depends}
 Description: Teamviewer Host plugin for OpenMediaVault.

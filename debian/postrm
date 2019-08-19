@@ -5,8 +5,13 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
+remove_action() {
+    dpkg-trigger update-fixperms
+}
+
 case "$1" in
     remove|purge)
+        remove_action
         omv_config_delete "/config/services/teamviewerhost"
     ;;
 
